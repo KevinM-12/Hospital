@@ -1,0 +1,35 @@
+/* TarjetaUbicacion */
+
+.ubicacion-tarjeta img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  display: block;
+}
+
+.ubicacion-cuerpo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 28px 28px;
+  background: #eef5f1;
+}
+
+.ubicacion-cuerpo strong {
+  font-size: 18px;
+  color: #173f3c;
+}
+
+.ubicacion-cuerpo small {
+  font-size: 14px;
+  color: #6f8580;
+}
+
+.ubicacion-cuerpo a {
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d6a60;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}

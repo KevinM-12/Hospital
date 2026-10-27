@@ -1,0 +1,14 @@
+/* Icono */
+
+/* El archivo .svg se usa como "máscara" y se pinta con el color del texto (currentColor) */
+.icono {
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-size: contain;
+}

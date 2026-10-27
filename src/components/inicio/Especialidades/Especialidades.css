@@ -1,0 +1,132 @@
+/* Especialidades */
+
+.especialidades {
+  padding-top: 64px;
+  padding-bottom: 50px;
+  background: #f8f8f0;
+}
+
+.especialidades-grilla {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.especialidad-tarjeta {
+  min-height: 115px;
+  background: #fff;
+  border: 1px solid #edf0e9;
+  border-radius: 14px;
+  padding: 21px 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
+}
+
+.especialidad-tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px #1d4d3f0c;
+}
+
+.especialidad-icono {
+  width: 49px;
+  height: 49px;
+  border-radius: 11px;
+  background: #eff6f2;
+  color: #337e72;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.especialidad-texto {
+  min-width: 0;
+}
+
+.especialidad-texto strong,
+.especialidad-texto small {
+  display: block;
+}
+
+.especialidad-texto strong {
+  font-size: 17px;
+  margin-bottom: 7px;
+  color: #254f49;
+}
+
+.especialidad-texto small {
+  font-size: 14px;
+  color: #82928a;
+  line-height: 1.4;
+}
+
+.tarjeta-flecha {
+  margin-left: auto;
+  align-self: flex-start;
+  color: #37877a;
+  font-size: 20px;
+}
+
+.especialidades-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 21px;
+  margin-top: 32px;
+  font-size: 13px;
+  color: #7c9087;
+}
+
+.especialidades-pie a {
+  color: #28776c;
+  font-weight: 600;
+}
+
+.especialidades-pie b {
+  font-size: 17px;
+  margin-left: 7px;
+}
+
+@media (max-width: 760px) {
+  .especialidades {
+    padding-top: 42px;
+    padding-bottom: 36px;
+  }
+  .especialidades-grilla {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+  }
+  .especialidad-tarjeta {
+    padding: 14px 12px;
+    gap: 11px;
+    min-height: 102px;
+  }
+  .especialidad-icono {
+    width: 36px;
+    height: 36px;
+  }
+  .especialidad-texto strong {
+    font-size: 13px;
+  }
+  .especialidad-texto small {
+    font-size: 11px;
+  }
+  .especialidades-pie {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 14px;
+  }
+}
+
+@media (max-width: 460px) {
+  .especialidades-grilla {
+    grid-template-columns: 1fr;
+  }
+  .especialidad-tarjeta {
+    min-height: 84px;
+  }
+}

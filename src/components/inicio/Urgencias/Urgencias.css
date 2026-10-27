@@ -1,0 +1,65 @@
+/* Urgencias */
+
+.urgencias {
+  padding: 28px max(calc((100vw - 1400px) / 2), 5.6%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #fbf0e9;
+  color: #9a503d;
+}
+
+.urgencias-icono {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #f6dfd3;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.urgencias strong {
+  font-size: 15px;
+}
+
+.urgencias p {
+  font-size: 13px;
+  margin: 6px 0 0;
+  color: #a76e5d;
+}
+
+.urgencias > a {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.urgencias > a span {
+  margin-left: 11px;
+}
+
+@media (max-width: 760px) {
+  .urgencias {
+    padding: 20px 5%;
+    align-items: flex-start;
+  }
+  .urgencias p {
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 460px) {
+  .urgencias {
+    gap: 11px;
+  }
+  .urgencias-icono {
+    width: 34px;
+    height: 34px;
+  }
+  .urgencias > a {
+    font-size: 11px;
+  }
+}

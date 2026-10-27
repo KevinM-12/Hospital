@@ -9,12 +9,12 @@
   font-weight: 400;
   font-size: 14px;
   font-smooth: always;
-  --ink: #164542;
-  --green: #17645d;
-  --muted: #6f8580;
-  --pale: #edf5f1;
-  --cream: #f8f8f0;
-  --line: #dce8e2;
+  --tinta: #164542;
+  --verde: #17645d;
+  --gris: #6f8580;
+  --claro: #edf5f1;
+  --crema: #f8f8f0;
+  --linea: #dce8e2;
 }
 * {
   box-sizing: border-box;
@@ -55,4 +55,115 @@ a:focus-visible {
 }
 ::selection {
   background: #c9e3d9;
+}
+
+/* ===== Utilidades y botones compartidos ===== */
+.boton {
+  min-height: 53px;
+  padding: 0 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 15px;
+  border: 1px solid transparent;
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+
+.boton:hover {
+  transform: translateY(-1px);
+}
+
+.boton span {
+  font-size: 20px;
+}
+
+.boton-oscuro {
+  background: #17645d;
+  color: #fff;
+}
+
+.boton-oscuro:hover {
+  background: #104e49;
+}
+
+.boton-borde {
+  border-color: #b8d0c7;
+  color: #1b5d55;
+  background: transparent;
+}
+
+.boton-borde:hover {
+  background: #e5f1eb;
+}
+
+.boton.pequeno {
+  min-height: 48px;
+  padding: 0 18px;
+}
+
+.sobretitulo {
+  font-size: 13px;
+  letter-spacing: 0.075em;
+  font-weight: 800;
+  color: #27786d;
+  margin-bottom: 24px;
+}
+
+.contenedor-seccion {
+  padding-left: max(calc((100vw - 1400px) / 2), 5.6%);
+  padding-right: max(calc((100vw - 1400px) / 2), 5.6%);
+}
+
+.enlace-flecha {
+  font-size: 14px;
+  font-weight: 700;
+  color: #28776c;
+  white-space: nowrap;
+}
+
+.enlace-flecha span {
+  margin-left: 11px;
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+.boton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.boton-peligro {
+  background: #a2432f;
+  color: #fff;
+}
+
+.boton-peligro:hover {
+  background: #86361f;
+}
+
+@media (max-width: 760px) {
+  .contenedor-seccion {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 }

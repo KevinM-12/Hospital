@@ -1,0 +1,8 @@
+/* TarjetaLateral */
+
+.tarjeta-lateral {
+  background: #fff;
+  border: 1px solid var(--linea);
+  border-radius: 18px;
+  overflow: hidden;
+}

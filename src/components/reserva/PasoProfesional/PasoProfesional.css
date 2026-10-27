@@ -1,0 +1,177 @@
+/* PasoProfesional */
+
+.avatar {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #dcebe4;
+  color: var(--verde);
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.separador {
+  border: 0;
+  border-top: 1px solid var(--linea);
+  margin: 30px 0;
+}
+
+.semana-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #6f8580;
+}
+
+.semana-nav button {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: none;
+  border-radius: 8px;
+  color: #345b55;
+  cursor: pointer;
+}
+
+.semana-nav button:hover:not(:disabled) {
+  background: #eef5f1;
+}
+
+.semana-nav button:disabled {
+  color: #c3d3cc;
+  cursor: not-allowed;
+}
+
+.dias-grilla {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.dia-boton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 6px;
+  border: 1px solid #d9e5df;
+  border-radius: 10px;
+  background: #eef5f1;
+  color: #345b55;
+  font: inherit;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dia-boton small {
+  font-size: 14px;
+  color: #6f8580;
+}
+
+.dia-boton strong {
+  font-size: 26px;
+  line-height: 1.1;
+  color: #173f3c;
+}
+
+.dia-boton span {
+  font-size: 13px;
+  color: #6f8580;
+}
+
+.dia-boton:hover:not(:disabled) {
+  background: #e1efe8;
+}
+
+.dia-boton.seleccionado {
+  background: var(--verde);
+  border-color: var(--verde);
+}
+
+.dia-boton.seleccionado small,
+.dia-boton.seleccionado strong,
+.dia-boton.seleccionado span {
+  color: #fff;
+}
+
+.dia-boton:disabled {
+  background: #f1f4f1;
+  cursor: not-allowed;
+}
+
+.dia-boton:disabled strong {
+  color: #9cafa8;
+}
+
+.horas-titulo {
+  margin-top: 30px;
+}
+
+.horas-titulo h3 {
+  font-size: 18px;
+}
+
+.horas-grilla {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.hora-boton {
+  padding: 14px 6px;
+  border: 1px solid #d9e5df;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  font-size: 16px;
+  color: #234c47;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.hora-boton:hover:not(:disabled) {
+  background: #eef5f1;
+}
+
+.hora-boton.seleccionado {
+  background: #e8f3ee;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 1px var(--verde);
+  font-weight: 700;
+  color: var(--verde);
+}
+
+.hora-boton:disabled {
+  background: #f6f6ee;
+  border-color: #ecece0;
+  color: #a5aaa0;
+  cursor: not-allowed;
+}
+
+.horas-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 16px 0 24px;
+  font-size: 13px;
+  color: #6f8580;
+}
+
+.horas-leyenda span:first-child {
+  color: #2a7a6e;
+}
+
+@media (max-width: 640px) {
+  .dias-grilla {
+    grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  }
+  .horas-grilla {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

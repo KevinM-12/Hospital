@@ -1,0 +1,35 @@
+/* TituloSeccion */
+
+.titulo-seccion {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 34px;
+  margin-bottom: 32px;
+}
+
+.titulo-seccion .sobretitulo {
+  margin-bottom: 14px;
+}
+
+.titulo-seccion h2 {
+  font-size: clamp(34px, 2.8vw, 48px);
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+  margin: 0 0 11px;
+  color: #174744;
+}
+
+.descripcion-seccion {
+  color: #7b8e85;
+  font-size: 15px;
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .titulo-seccion {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+}

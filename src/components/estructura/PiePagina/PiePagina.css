@@ -1,0 +1,91 @@
+/* PiePagina */
+
+.pie {
+  background: #123f3c;
+  color: #d8e8e1;
+  padding: 42px max(calc((100vw - 1400px) / 2), 5.6%) 22px;
+}
+
+.pie-superior {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(3, 1fr);
+  gap: 49px;
+  padding-bottom: 36px;
+}
+
+.pie-marca p {
+  font-size: 13px;
+  color: #a7c3b8;
+  max-width: 308px;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+.pie-superior > div:not(:first-child) {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  font-size: 13px;
+}
+
+.pie-superior > div > strong {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.pie-superior > div > a:not(.marca) {
+  color: #a9c5ba;
+}
+
+.pie-superior a:hover,
+.pie-inferior a:hover {
+  color: #fff;
+}
+
+.pie-inferior {
+  border-top: 1px solid #ffffff24;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 28px;
+  font-size: 11px;
+  color: #9ebbb0;
+}
+
+.pie-inferior div {
+  display: flex;
+  gap: 24px;
+}
+
+@media (max-width: 760px) {
+  .pie {
+    padding: 32px 5% 18px;
+  }
+  .pie-superior {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .pie-marca {
+    grid-column: 1/-1;
+  }
+  .pie-inferior {
+    flex-direction: column;
+    gap: 14px;
+  }
+  .pie-inferior div {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 460px) {
+  .pie-superior {
+    grid-template-columns: 1fr 1fr;
+  }
+  .pie-marca {
+    grid-column: 1/-1;
+  }
+  .pie-superior > div:last-child {
+    grid-column: 1/-1;
+  }
+}

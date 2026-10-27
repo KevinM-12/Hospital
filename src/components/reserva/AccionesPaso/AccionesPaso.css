@@ -1,0 +1,44 @@
+/* AccionesPaso */
+
+.acciones-paso {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.enlace-volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #234c47;
+  cursor: pointer;
+}
+
+.enlace-volver:hover {
+  color: var(--verde);
+}
+
+.acciones-paso.con-linea {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--linea);
+}
+
+@media (max-width: 640px) {
+  .acciones-paso {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+  .acciones-paso .boton {
+    justify-content: center;
+  }
+}

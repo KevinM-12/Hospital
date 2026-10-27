@@ -1,0 +1,22 @@
+/* AvisoUrgencia */
+
+.aviso-urgencia {
+  display: flex;
+  gap: 14px;
+  padding: 20px 22px;
+  background: #fbebe7;
+  border: 1px solid #f3cfc6;
+  border-radius: 12px;
+  color: #a2432f;
+}
+
+.aviso-urgencia .icono {
+  flex: none;
+  margin-top: 2px;
+}
+
+.aviso-urgencia p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+}

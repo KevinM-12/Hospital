@@ -1,0 +1,65 @@
+/* ItemCita */
+
+.cita-item {
+  background: #fff;
+  border: 1px solid var(--linea);
+  border-radius: 18px;
+  padding: 34px 38px;
+}
+
+.cita-item.cancelada {
+  background: #fafbf9;
+}
+
+.cita-item.cancelada .lista-datos,
+.cita-item.cancelada .cita-cabecera h2 {
+  opacity: 0.55;
+}
+
+.cita-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.cita-cabecera h2 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  color: #174744;
+}
+
+.cita-cabecera p {
+  margin: 0;
+  font-size: 15px;
+  color: #6f8580;
+}
+
+.cita-acciones {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 30px;
+  padding-top: 26px;
+  border-top: 1px solid var(--linea);
+}
+
+.cita-item .boton {
+  min-height: 50px;
+  padding: 0 22px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .cita-item {
+    padding: 26px 20px;
+  }
+  .cita-cabecera,
+  .cita-acciones {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

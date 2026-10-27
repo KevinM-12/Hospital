@@ -1,0 +1,28 @@
+/* MisCitas */
+
+.citas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.tarjeta-reserva.sin-citas {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 64px 24px;
+  text-align: center;
+  color: #28776c;
+}
+
+.tarjeta-reserva.sin-citas h2 {
+  margin: 8px 0 0;
+}
+
+.tarjeta-reserva.sin-citas p {
+  max-width: 420px;
+  margin: 0 0 12px;
+  font-size: 16px;
+  color: #6f8580;
+}

@@ -1,0 +1,52 @@
+/* CampoFormulario */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #234c47;
+}
+
+.campo label small {
+  font-weight: 400;
+  color: #81938c;
+}
+
+.campo input,
+.campo textarea {
+  width: 100%;
+  min-height: 54px;
+  padding: 0 16px;
+  border: 1px solid #cfdcd6;
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  font-size: 16px;
+  color: #173f3c;
+}
+
+.campo textarea {
+  padding: 14px 16px;
+  resize: vertical;
+}
+
+.campo input:focus,
+.campo textarea:focus {
+  outline: 2px solid #439e90;
+  outline-offset: 1px;
+  border-color: #439e90;
+}
+
+.campo.con-error input {
+  border-color: #c4442d;
+}
+
+.campo-error {
+  font-size: 13px;
+  color: #b53a25;
+}

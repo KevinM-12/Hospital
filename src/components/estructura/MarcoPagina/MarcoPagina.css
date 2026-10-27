@@ -1,0 +1,56 @@
+/* MarcoPagina */
+
+.marco-pagina {
+  background: #f4f7f3;
+  padding: 36px max(calc((100vw - 1400px) / 2), 5.6%) 90px;
+  min-height: 70vh;
+}
+
+.marco-migas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+  color: #6f8580;
+  margin-bottom: 26px;
+}
+
+.marco-migas a:hover {
+  color: var(--verde);
+}
+
+.marco-titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 26px;
+}
+
+.marco-titulo h1 {
+  font-size: clamp(32px, 3vw, 46px);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  color: #174744;
+  margin: 0 0 10px;
+}
+
+.marco-titulo h1:focus {
+  outline: none;
+}
+
+.marco-titulo p {
+  font-size: 17px;
+  color: #6f8580;
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .marco-pagina {
+    padding-top: 24px;
+  }
+  .marco-titulo {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

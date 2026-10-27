@@ -1,0 +1,22 @@
+/* CuadroInfo */
+
+.cuadro-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 18px 22px;
+  background: #eef5f1;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #345b55;
+}
+
+.cuadro-info p {
+  margin: 0;
+}
+
+.cuadro-info .icono {
+  flex: none;
+  color: var(--verde);
+}

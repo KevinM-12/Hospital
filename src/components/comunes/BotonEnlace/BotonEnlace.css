@@ -1,0 +1,25 @@
+/* BotonEnlace */
+
+.boton-enlace {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1d6a60;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+
+.boton-enlace:hover {
+  color: var(--verde);
+}
+
+.boton-enlace.peligro {
+  color: #a2432f;
+}
