@@ -5,6 +5,7 @@ import ItemCita from '../../components/citas/ItemCita/ItemCita'
 import Icono from '../../components/comunes/Icono/Icono'
 import TarjetaReserva from '../../components/reserva/TarjetaReserva/TarjetaReserva'
 import { correoConfigurado } from '../../configuracion/emailjs'
+import { cancelarCita as cancelarCitaApi } from '../../servicios/api'
 import {
   cerrarAlerta,
   confirmar,
@@ -32,6 +33,22 @@ export default function MisCitas() {
       peligro: true,
     })
     if (!aceptado) return
+
+    // Cancela primero en el backend (libera el horario en MySQL)
+    mostrarCargando('Cancelando tu cita…')
+    try {
+      await cancelarCitaApi(cita.id, cita.datos.paciente.correo)
+    } catch (error) {
+      cerrarAlerta()
+      mostrarAviso(
+        'warning',
+        error.message === 'Failed to fetch'
+          ? 'No pudimos conectar con el servidor. Inténtalo de nuevo.'
+          : `No se pudo cancelar la cita: ${error.message}`,
+      )
+      return
+    }
+    cerrarAlerta()
 
     actualizarCita(cita.id, { estado: 'cancelada' })
     setCitas(obtenerCitas())

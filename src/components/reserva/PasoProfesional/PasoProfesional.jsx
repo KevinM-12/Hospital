@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AccionesPaso from '../AccionesPaso/AccionesPaso'
 import CuadroInfo from '../../comunes/CuadroInfo/CuadroInfo'
 import Icono from '../../comunes/Icono/Icono'
@@ -8,6 +8,7 @@ import {
   buscarEspecialidad,
   buscarProfesional,
 } from '../../../datos/datosReserva'
+import { obtenerHorarios } from '../../../servicios/api'
 import {
   MAX_SEMANAS,
   aISO,
@@ -15,7 +16,6 @@ import {
   diaSemanaCorto,
   diaYMes,
   indiceDeSemana,
-  obtenerHoras,
   obtenerSemana,
   proximaFechaDisponible,
   rangoSemana,
@@ -25,7 +25,7 @@ import {
 } from '../../../utilidades/fechas'
 import './PasoProfesional.css'
 
-// Paso 2: elegir profesional, día y hora
+// Paso 2: elegir profesional, día y hora (las horas vienen del backend)
 export default function PasoProfesional({ datos, actualizar, alVolver, alContinuar }) {
   const profesionales = PROFESIONALES[datos.especialidadId]
   const especialidad = buscarEspecialidad(datos.especialidadId)
@@ -34,9 +34,44 @@ export default function PasoProfesional({ datos, actualizar, alVolver, alContinu
   // Semana que se está viendo (0 = la primera)
   const [indiceSemana, setIndiceSemana] = useState(indiceDeSemana(datos.fecha))
 
+  // Horas reales del día elegido: [{ hora: '09:00', libre: true }, ...]
+  const [horas, setHoras] = useState([])
+  const [cargandoHoras, setCargandoHoras] = useState(false)
+  const [errorHoras, setErrorHoras] = useState('')
+
   const semana = obtenerSemana(indiceSemana)
   const fechaElegida = datos.fecha ? deISO(datos.fecha) : null
-  const horas = datos.fecha ? obtenerHoras(profesional, datos.fecha) : []
+
+  // Cada vez que cambia el profesional o el día, se piden las horas al backend
+  useEffect(() => {
+    if (!datos.fecha || !profesional) {
+      setHoras([])
+      return
+    }
+
+    let cancelado = false
+    setCargandoHoras(true)
+    setErrorHoras('')
+
+    obtenerHorarios(profesional.numero, datos.fecha)
+      .then((lista) => {
+        if (cancelado) return
+        setHoras(lista.map((item) => ({ hora: item.hora, libre: item.disponible })))
+      })
+      .catch(() => {
+        if (cancelado) return
+        setHoras([])
+        setErrorHoras('No pudimos cargar los horarios. Revisa tu conexión e inténtalo de nuevo.')
+      })
+      .finally(() => {
+        if (!cancelado) setCargandoHoras(false)
+      })
+
+    // Evita mezclar respuestas si el usuario cambia rápido de día o profesional
+    return () => {
+      cancelado = true
+    }
+  }, [profesional, datos.fecha])
 
   // Al elegir un profesional se selecciona su primer día con horas libres
   function elegirProfesional(nuevo) {
@@ -55,7 +90,7 @@ export default function PasoProfesional({ datos, actualizar, alVolver, alContinu
     <>
       <div className="tarjeta-titulo-fila">
         <h2>Elige tu profesional</h2>
-        <span>{profesionales.length} profesionales de ejemplo</span>
+        <span>{profesionales.length} profesionales disponibles</span>
       </div>
 
       <fieldset className="opciones-grilla">
@@ -138,6 +173,13 @@ export default function PasoProfesional({ datos, actualizar, alVolver, alContinu
             <h3>{tituloDia(fechaElegida)}</h3>
             <span>Duración estimada: 30 min</span>
           </div>
+
+          {cargandoHoras && <p className="horas-leyenda">Cargando horarios…</p>}
+          {errorHoras && <CuadroInfo>{errorHoras}</CuadroInfo>}
+          {!cargandoHoras && !errorHoras && horas.length === 0 && (
+            <CuadroInfo>No hay horarios para este día. Elige otro día.</CuadroInfo>
+          )}
+
           <div className="horas-grilla">
             {horas.map((item) => {
               const elegida = item.hora === datos.hora
@@ -183,9 +225,6 @@ export default function PasoProfesional({ datos, actualizar, alVolver, alContinu
           Continuar con mis datos <Icono nombre="flecha-derecha" tamano={18} />
         </button>
       </AccionesPaso>
-      <p className="nota-reserva">
-        Disponibilidad ficticia. Ningún horario queda reservado en esta demostración.
-      </p>
     </>
   )
 }

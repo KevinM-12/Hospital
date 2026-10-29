@@ -21,8 +21,10 @@ import {
   PASOS,
   PROFESIONALES,
   buscarEspecialidad,
+  buscarProfesional,
   buscarTipoConsulta,
 } from '../../datos/datosReserva'
+import { crearCita, reprogramarCita } from '../../servicios/api'
 import {
   cerrarAlerta,
   mostrarAlerta,
@@ -32,11 +34,23 @@ import {
   actualizarCita,
   agregarCita,
   buscarCita,
-  crearLocalizador,
 } from '../../servicios/citasGuardadas'
 import { enviarCorreoCita } from '../../servicios/servicioCorreo'
 import { aISO, proximaFechaDisponible } from '../../utilidades/fechas'
 import './Reserva.css'
+
+// id de cada especialidad en la base de datos (tabla especialidades)
+const ID_BD_ESPECIALIDAD = {
+  'medicina-general': 1,
+  pediatria: 2,
+  ginecologia: 3,
+  cardiologia: 4,
+  traumatologia: 5,
+  dermatologia: 6,
+  oftalmologia: 7,
+  neurologia: 8,
+  urologia: 9,
+}
 
 // Página de reserva (/solicitar-cita): muestra uno de los 5 pasos
 export default function Reserva() {
@@ -80,9 +94,8 @@ export default function Reserva() {
     setPaso(2)
   }
 
-  // Paso 4 -> 5: guarda la cita en "Mis citas", envía el correo y muestra el resultado
+  // Paso 4 -> 5: reserva en el backend, guarda en "Mis citas", envía el correo y muestra el resultado
   async function confirmar() {
-    const localizador = citaEditada ? citaEditada.id : crearLocalizador()
     const datosCita = {
       especialidadId: datos.especialidadId,
       tipoConsulta: datos.tipoConsulta,
@@ -91,17 +104,48 @@ export default function Reserva() {
       hora: datos.hora,
       paciente: datos.paciente,
     }
+    const correoPaciente = datos.paciente.correo.trim()
+    let localizador
 
-    if (citaEditada) {
-      actualizarCita(localizador, { estado: 'confirmada', datos: datosCita })
-    } else {
-      agregarCita({
-        id: localizador,
-        estado: 'confirmada',
-        creadaEl: new Date().toISOString(),
-        datos: datosCita,
+    mostrarCargando('Confirmando tu cita…', 'Estamos reservando tu horario.')
+
+    try {
+      if (citaEditada) {
+        await reprogramarCita(citaEditada.id, correoPaciente, datos.fecha, datos.hora)
+        localizador = citaEditada.id
+        actualizarCita(localizador, { estado: 'confirmada', datos: datosCita })
+      } else {
+        const profesional = buscarProfesional(datos.especialidadId, datos.profesionalId)
+        const cita = await crearCita(
+          datos,
+          ID_BD_ESPECIALIDAD[datos.especialidadId],
+          profesional.numero,
+        )
+        localizador = cita.localizador
+        agregarCita({
+          id: localizador,
+          estado: 'confirmada',
+          creadaEl: new Date().toISOString(),
+          datos: datosCita,
+        })
+      }
+    } catch (error) {
+      cerrarAlerta()
+      const ocupado = error.codigo === 'HORARIO_NO_DISPONIBLE'
+      mostrarAlerta({
+        icono: 'error',
+        titulo: 'No pudimos reservar tu cita',
+        texto: ocupado
+          ? 'Ese horario ya no está disponible. Elige otro.'
+          : error.message === 'Failed to fetch'
+            ? 'No pudimos conectar con el servidor. Inténtalo de nuevo.'
+            : error.message,
       })
+      if (ocupado) setPaso(2)
+      return
     }
+
+    cerrarAlerta()
 
     if (correoConfigurado) {
       mostrarCargando(
@@ -113,14 +157,13 @@ export default function Reserva() {
     const resultado = await enviarCorreoCita(datosCita, localizador, tipoCorreo)
     if (correoConfigurado) cerrarAlerta()
 
-    actualizar({ localizador: localizador })
+    actualizar({ localizador })
     setEstadoCorreo(resultado)
     setPaso(5)
 
-    const correo = datos.paciente.correo.trim()
     const textos = {
-      enviado: `Tu localizador es ${localizador}. Te hemos enviado un correo a ${correo}.`,
-      error: `Tu localizador es ${localizador}. Tu cita quedó guardada, pero no pudimos enviar el correo.`,
+      enviado: `Tu localizador es ${localizador}. Te hemos enviado un correo a ${correoPaciente}.`,
+      error: `Tu localizador es ${localizador}. Tu cita quedó registrada, pero no pudimos enviar el correo.`,
       'sin-configurar': `Tu localizador es ${localizador}. Puedes consultar tu cita en Mis citas.`,
     }
     mostrarAlerta({
@@ -152,7 +195,7 @@ export default function Reserva() {
       subtitulo: 'Comprueba que todo está correcto antes de confirmar.',
     },
     {
-      titulo: 'Tu cita de ejemplo está confirmada',
+      titulo: 'Tu cita está confirmada',
       subtitulo: `Gracias, ${datos.paciente.nombre.trim()}. Guarda estos detalles para tener tu próxima visita a mano.`,
     },
   ]
@@ -161,11 +204,10 @@ export default function Reserva() {
   // Aviso del último paso, según se haya enviado el correo o no
   const correo = datos.paciente.correo.trim()
   const avisosConfirmacion = {
-    enviado: `Confirmación simulada: no hay una reserva real. Hemos enviado un correo de confirmación a ${correo}.`,
-    error:
-      'Confirmación simulada: no hay una reserva real. No pudimos enviar el correo, pero tu cita está guardada en este navegador.',
+    enviado: `Hemos enviado un correo de confirmación a ${correo}.`,
+    error: 'No pudimos enviar el correo, pero tu cita quedó registrada.',
     'sin-configurar':
-      'Confirmación simulada: no hay una reserva real y no se ha enviado ningún correo ni SMS. Tu cita se guarda solo en este navegador.',
+      'Tu cita quedó registrada. Guarda tu localizador para consultarla.',
   }
 
   return (

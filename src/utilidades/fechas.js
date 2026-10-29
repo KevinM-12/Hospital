@@ -1,5 +1,5 @@
-// Funciones para trabajar con fechas, semanas y horarios de ejemplo.
-import { HORAS } from '../datos/datosReserva'
+// Funciones para trabajar con fechas y semanas de la reserva.
+// Las horas libres u ocupadas de cada día las informa el backend (ver PasoProfesional).
 
 export const MAX_SEMANAS = 4 // cuántas semanas se pueden consultar
 
@@ -101,32 +101,18 @@ export function indiceDeSemana(iso) {
   return Math.min(Math.max(indice, 0), MAX_SEMANAS - 1)
 }
 
-// ----- Horarios de ejemplo -----
+// ----- Disponibilidad -----
 
-// Devuelve las horas de un día: [{ hora: '09:00', libre: true }, ...]
-// Es disponibilidad inventada, pero siempre igual para el mismo día y profesional.
-export function obtenerHoras(profesional, iso) {
-  const [, mes, dia] = iso.split('-').map(Number)
-  const semilla = dia * 7 + mes * 31 + profesional.numero * 13
-
-  if (semilla % 6 === 0) return [] // un día de cada seis no tiene horas
-
-  return HORAS.map((hora, i) => ({ hora, libre: (semilla + i * 5) % 3 !== 0 }))
+// Los profesionales atienden de lunes a viernes (igual que en la base de datos).
+// Todos los días que muestra el calendario se pueden elegir; si un día no tuviera
+// horas, PasoProfesional lo avisa con los datos que devuelve el backend.
+export function tieneHoras() {
+  return true
 }
 
-export function tieneHoras(profesional, iso) {
-  return obtenerHoras(profesional, iso).some((item) => item.libre)
-}
-
-// Primer día con horas libres para un profesional (o null si no hay)
-export function proximaFechaDisponible(profesional) {
-  for (let semana = 0; semana < MAX_SEMANAS; semana++) {
-    const dia = obtenerSemana(semana).find((fecha) =>
-      tieneHoras(profesional, aISO(fecha)),
-    )
-    if (dia) return dia
-  }
-  return null
+// Primer día que se puede reservar (el primer lunes disponible)
+export function proximaFechaDisponible() {
+  return obtenerSemana(0)[0]
 }
 
 // ----- Textos de fechas -----
